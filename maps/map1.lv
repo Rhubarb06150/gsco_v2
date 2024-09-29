@@ -1,0 +1,5 @@
+#NAME:Map 1
+#DIMS:8,8
+#DEFAULT:grass
+#STPOS:2,2
+SQ{4,4,2,2,"bush"}
