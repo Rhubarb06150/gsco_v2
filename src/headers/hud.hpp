@@ -17,5 +17,6 @@ void show_text_c(char* text,int xpos, int ypos);
 void set_text_color(unsigned int r,unsigned int g,unsigned int b,unsigned int a);
 void reset_text_color();
 void draw_square(unsigned int x,unsigned int y,unsigned int size_x,unsigned int size_y);
+int ask_yn(std::string question);
 
 #endif

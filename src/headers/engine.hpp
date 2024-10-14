@@ -14,6 +14,7 @@ extern std::chrono::high_resolution_clock::time_point time_start;
 extern std::chrono::high_resolution_clock::time_point time_end;
 extern const char* UNKNOWN;
 extern std::string user_path;
+extern unsigned int user_lang;
 
 void init_engine();
 void frame();
@@ -22,5 +23,6 @@ void end_fps_measure();
 void screenshot();
 int create_missing_dir(std::string path);
 bool str_starts(std::string str,std::string pattern);
+void frame_eng();
 std::string replace_str(std::string str,const std::string& from,const std::string& to);
 #endif

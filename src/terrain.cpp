@@ -23,6 +23,7 @@ manage terrain, show it and control it
 std::vector<std::vector<sf::Texture>> terrain_textures={{},{},{}};
 std::vector<std::vector<std::string>> terrain_textures_indexes={};
 std::vector<std::vector<std::string>> terrain_vector={};
+
 unsigned int time_otd=0;
 unsigned int hovering_tile=1;
 int scanline_l=0;
@@ -75,15 +76,16 @@ void init_terrain(){
 };
 
 void show_terrain(){
+	std::string last_tile="\0";
 	int b_pos_x=player_pos_x/16;
 	int b_pos_y=player_pos_y/16;
 	showed_tiles=0;
 	sf::Sprite terrain_tile; //master tile
 
-	scanline_l=b_pos_x-(camera_x/16);
-	scanline_t=b_pos_y-(camera_y/16);
-	scanline_l-=(tiles_nb_h/2);
-	scanline_t-=(tiles_nb_v/2);
+	scanline_l=/*(camera_x/16)+*/b_pos_x;
+	scanline_t=/*(camera_y/16)+*/b_pos_y;
+	scanline_l-=(tiles_nb_h/2)-1;
+	scanline_t-=((tiles_nb_v-2)/2)+1;
 
 	if(scanline_l<0)
 		scanline_l=0;
@@ -102,7 +104,10 @@ void show_terrain(){
 			((x*16)+camera_x-player_pos_x),
 			((y*16)+camera_y-player_pos_y)
 			);
-			terrain_tile.setTexture(terrain_textures[time_otd][get_tile_index(terrain_vector[y][x])]);
+			if(last_tile!=terrain_vector[y][x]){
+				terrain_tile.setTexture(terrain_textures[time_otd][get_tile_index(terrain_vector[y][x])]);
+			}
+			last_tile=terrain_vector[y][x];
 			window.draw(terrain_tile);
 			showed_tiles++;
 			//update_window();
@@ -110,9 +115,12 @@ void show_terrain(){
 		}
 	}
 	//DEBUG
+	//show_text(std::to_string(scanline_l)+","+std::to_string(scanline_t),0,0);
+	//show_text("tiles:"+std::to_string(showed_tiles),0,8);
+	
 	//show_text("scanline_l: "+std::to_string(scanline_l)+"\nscanline_t: "+std::to_string(scanline_t),0,0);
 	//show_text("posx: "+std::to_string(player_pos_x)+"\nposy: "+std::to_string(player_pos_y),0,16);
-	show_text("tiles:"+std::to_string(showed_tiles),0,8);
+	//show_text("tiles:"+std::to_string(showed_tiles),0,8);
 	//show_text("ar: "+aspect_ratio,0,40);
 };
 

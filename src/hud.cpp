@@ -1,13 +1,18 @@
 // /src/hud.cpp - Gestion of the hud and texts on the screen
 
 #include <SFML/Graphics.hpp>
-#include "headers/window.hpp"
 #include <stdio.h>
 #include <iostream>
 #include <string>
 #include <vector>
 #include <algorithm>
 #include <cstring>
+
+#include "headers/window.hpp"
+#include "headers/engine.hpp"
+#include "headers/texts.hpp"
+#include "headers/terrain.hpp"
+
 
 std::vector<std::vector<sf::Texture>> letters={};
 std::vector<sf::Texture> colored_letters_textures={};
@@ -26,7 +31,7 @@ void hud_init(){
 	for(int i=0;i<16;i++){
 		letters.push_back({l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l});
 	};
-	std::string toc=" 0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz:;.!?_-/\\()[]}{<>\"'$#";
+	std::string toc=" 0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz:;.!?_-/\\()[]}{<>\"'$#|";
 	for(int i=0;i<toc.size();i++){
 		unsigned int h_v=int(toc[i]);
 		unsigned int x=h_v/16;
@@ -154,4 +159,40 @@ void show_text_c(char* text,int xpos,int ypos){
 	std::string to_p;
 	to_p=text;
 	show_text(to_p,xpos,ypos);
+}
+
+int ask_yn(std::string question){
+	unsigned int choice=0;
+	draw_square(0,13,24,5);
+	show_text(question,8,112);
+	draw_square(18,10,6,4);
+	show_text(texts["no"][user_lang]+"\n"+texts["yes"][user_lang],160,88);
+	show_text("|",152,88+(choice*8));
+	update_window();
+	while(true){
+		//frame();
+		sf::Event event;
+		while(window.pollEvent(event)){
+			//if(event.type==sf::Event::KeyPressed){
+				//if(event.key.code==sf::Keyboard::Up||event.key.code==sf::Keyboard::Down){
+				if(sf::Keyboard::isKeyPressed(sf::Keyboard::Up)||sf::Keyboard::isKeyPressed(sf::Keyboard::Down)){
+					if(choice==0){
+						choice=1;
+					}else{
+						choice=0;
+					}
+					//std::cout<<"choice"<<std::endl;
+					draw_square(18,10,6,4);
+					show_text("|",152,88+(choice*8));
+					show_text(texts["no"][user_lang]+"\n"+texts["yes"][user_lang],160,88);
+					update_window();
+				}else if(event.type==sf::Event::KeyPressed&&event.key.code==sf::Keyboard::Return){
+					return choice;
+				}
+				//frame_eng();
+			}
+		//}
+		//update_window();
+		//update_window();
+	}
 }

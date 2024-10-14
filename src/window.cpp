@@ -18,7 +18,7 @@ sf::RenderWindow window;
 //4:3  192x144
 //16:9 256x144
 
-int resolution_h=160;
+int resolution_h=192;
 int resolution_v=144;
 int win_width=resolution_h*2;
 int win_height=resolution_v*2;

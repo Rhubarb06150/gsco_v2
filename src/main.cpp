@@ -9,28 +9,29 @@
 #include "headers/terrain.hpp"
 #include "headers/player.hpp"
 #include "headers/hud.hpp"
+#include "headers/texts.hpp"
 #include "headers/infos.h"
 
 int main(){
 
-	init_window();
-	show_text("gsco v"+std::string(VERSION),0,0);
-	update_window();
+	//show_text("gsco v"+std::string(VERSION),0,0);
+	//update_window();
 	reset_camera();
 
 	init_engine();
-	show_text("engine started"+std::string(VERSION),0,8);
-	update_window();
+	//show_text("engine started"+std::string(VERSION),0,8);
+	//update_window();
 
 	hud_init();
 	log("HUD","HUD loaded.");
-	show_text("HUD loaded"+std::string(VERSION),0,16);
-	update_window();
+	//show_text("HUD loaded"+std::string(VERSION),0,16);
+	//update_window();
 
 	init_terrain();
 	log("TERRAIN","Terrain loaded.");
-	show_text("terrain loaded"+std::string(VERSION),0,24);
-	update_window();
+	//show_text("terrain loaded"+std::string(VERSION),0,24);
+	//update_window();
+	init_window();
 
 	
 
@@ -69,8 +70,9 @@ int main(){
 		
 
 		//draw_square(0,(resolution_v/8)-5,resolution_h/8,5);
-		show_text("frames:"+std::to_string(frames),0,0);
+		//show_text("ATTEND QUOI????",8,112);
 		frame();
+		//show_text("frames:"+std::to_string(frames),0,0);
 		update_window();
 		frame_drawn=1;
 		//if(frames%2==0){

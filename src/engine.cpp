@@ -5,6 +5,7 @@
 #include"headers/hud.hpp"
 #include"headers/console.hpp"
 #include"headers/camera.hpp"
+#include"headers/texts.hpp"
 #include<filesystem>
 #include<cstring>
 #include<chrono>
@@ -26,6 +27,7 @@ float fps=0;
 std::chrono::high_resolution_clock::time_point time_start;
 std::chrono::high_resolution_clock::time_point time_end;
 std::string user_path="";
+unsigned int user_lang=1;
 
 void init_engine(){
 	#ifdef _WIN32
@@ -85,11 +87,52 @@ int create_missing_dir(std::string path){
 		return 0;
 	}
 }
-
+/*
+void frame_eng(){
+	if(event.type==sf::Event::Closed){
+		log("ENGINE","Quit from frame_eng");
+		window.close();
+		exit(0);
+	}else if(event.type==sf::Event::KeyPressed){
+		if(event.key.code==sf::Keyboard::F11){
+			sf::VideoMode desktop=sf::VideoMode::getDesktopMode();
+			window.create(sf::VideoMode(160,144),"WIN",sf::Style::Fullscreen);
+		}else if(event.key.code==sf::Keyboard::M){
+			time_otd=0;
+		}else if(event.key.code==sf::Keyboard::D){
+			time_otd=1;
+		}else if(event.key.code==sf::Keyboard::N){
+			time_otd=2;
+		};;
+	}else if(sf::Keyboard::isKeyPressed(sf::Keyboard::LControl)&&sf::Event::KeyPressed&&event.key.code==sf::Keyboard::Add){
+		win_width+=resolution_h;
+		win_height+=resolution_v;
+		//printf("zoom in\n");
+		//fflush(stdout);
+		window.setSize(sf::Vector2u(win_width,win_height));
+	}else if(sf::Keyboard::isKeyPressed(sf::Keyboard::LControl)&&sf::Event::KeyPressed&&event.key.code==sf::Keyboard::Subtract){
+		if(win_width>resolution_h){
+			win_width-=resolution_h;
+			win_height-=resolution_v;
+		};
+		//printf("zoom out\n");
+		//fflush(stdout);
+		window.setSize(sf::Vector2u(win_width,win_height));
+	}else if(sf::Keyboard::isKeyPressed(sf::Keyboard::LControl)&&sf::Event::KeyPressed&&event.key.code==sf::Keyboard::R){
+		set_text_color(rand()%255,rand()%255,rand()%255,255);
+		printf("random text color\n");
+		fflush(stdout);
+	}else if(sf::Keyboard::isKeyPressed(sf::Keyboard::LControl)&&sf::Event::KeyPressed&&event.key.code==sf::Keyboard::F){
+		colored_letters_textures={};
+		colored_letters_indexes={};
+		log("ENGINE","Memory flushed!");
+	}
+}
+*/
 void frame(){
 	//printf("Frame: %d\n",frames);
 	frames++;
-	sf::Event event;
+	//sf::Event event;
 	while(window.pollEvent(event)){
 		//PLAYER
 		if(sf::Keyboard::isKeyPressed(sf::Keyboard::Right)){
@@ -122,8 +165,11 @@ void frame(){
 		if(sf::Keyboard::isKeyPressed(sf::Keyboard::F2)){
 			screenshot();
 		}else if(event.type==sf::Event::Closed){
-			window.close();
-			exit(0);
+			//if(ask_yn(texts["quit"][user_lang]+"?")==1){
+				log("ENGINE","Exiting game.");
+				window.close();
+				exit(0);
+			//}
 		}else if(event.type==sf::Event::KeyPressed){
 			if(event.key.code==sf::Keyboard::F11){
 				sf::VideoMode desktop=sf::VideoMode::getDesktopMode();
